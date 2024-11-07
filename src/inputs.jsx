@@ -5,6 +5,9 @@ import {
   faScrewdriverWrench,
   faPlus,
   faTrashCan,
+  faGraduationCap,
+  faUserGear,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 
 function PersonalDataInput({ personData, functions }) {
@@ -183,4 +186,142 @@ function WorkExperience({ workData, handleChange }) {
   );
 }
 
-export { PersonalDataInput, WorkExperience };
+function Education({ educationData, handleChange }) {
+  const { school, degree } = educationData;
+  return (
+    <div className="education">
+      <div className="header">
+        <FontAwesomeIcon icon={faGraduationCap} className="icon" />
+        <h2>Education</h2>
+      </div>
+
+      <div>
+        <input
+          type="text"
+          value={school}
+          placeholder="school"
+          onChange={(e) => {
+            handleChange(e.target, "school");
+          }}
+        />
+      </div>
+
+      <div>
+        <input
+          type="text"
+          value={degree}
+          placeholder="degree"
+          onChange={(e) => {
+            handleChange(e.target, "degree");
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Skills({ skillsData, handleChange }) {
+  const hasManySkills = skillsData.length > 1;
+  const skillsOutput = skillsData.map((skillItem) => {
+    const { id, skill } = skillItem;
+    return (
+      <div key={id} className="skill">
+        <input
+          type="text"
+          value={skill}
+          placeholder="Language or Technology"
+          maxLength={15}
+          onChange={(e) => {
+            handleChange({ element: e.target, elementId: id });
+          }}
+        />
+
+        {hasManySkills && (
+          <FontAwesomeIcon
+            icon={faTrashCan}
+            className="icon"
+            onClick={() => handleChange({ elementId: id, deleteSkill: true })}
+          />
+        )}
+      </div>
+    );
+  });
+
+  return (
+    <div className="skills-input">
+      <div className="header">
+        <FontAwesomeIcon icon={faUserGear} className="icon" />
+        <h2>Skills</h2>
+      </div>
+
+      {skillsOutput}
+
+      <div>
+        <FontAwesomeIcon
+          icon={faPlus}
+          className="icon"
+          onClick={() => {
+            handleChange({ addNewSkill: true });
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Contacts({ contactsData, handleChange }) {
+  const { address, email, phoneNumber, portifolioLink } = contactsData;
+  return (
+    <div className="contacts-input">
+      <div className="header">
+        <FontAwesomeIcon icon={faAddressBook} className="icon" />
+        <h2>Contacts</h2>
+      </div>
+
+      <div>
+        <input
+          type="text"
+          value={address}
+          placeholder="address"
+          onChange={(e) => {
+            handleChange(e.target, "address");
+          }}
+        />
+      </div>
+
+      <div className="email-address">
+        <input
+          type="text"
+          value={email}
+          placeholder="email"
+          onChange={(e) => {
+            handleChange(e.target, "email");
+          }}
+        />
+
+        <input
+          type="text"
+          value={phoneNumber}
+          placeholder="phone number"
+          onChange={(e) => {
+            handleChange(e.target, "phoneNumber");
+          }}
+        />
+      </div>
+
+      <div>
+        <input
+          type="text"
+          value={portifolioLink}
+          placeholder="link to portifolio"
+          onChange={(e) => {
+            handleChange(e.target, "portifolioLink");
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// function Skills()
+export { PersonalDataInput, WorkExperience, Education, Skills, Contacts };

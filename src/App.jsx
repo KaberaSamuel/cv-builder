@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import Cv from "./cv";
-import { PersonalDataInput, WorkExperience } from "./inputs";
+import {
+  PersonalDataInput,
+  WorkExperience,
+  Education,
+  Skills,
+  Contacts,
+} from "./inputs";
 
 function App() {
   const [personData, setPersonData] = useState({
@@ -23,6 +29,25 @@ function App() {
       id: 0,
     },
   ]);
+
+  const [educationData, setEducationData] = useState({
+    school: "",
+    degree: "",
+  });
+
+  const [skillsData, setSkillsData] = useState([
+    {
+      id: crypto.randomUUID(),
+      skill: "",
+    },
+  ]);
+
+  const [contactsData, setContactsData] = useState({
+    address: "",
+    email: "",
+    phoneNumber: "",
+    portifolioLink: "",
+  });
 
   return (
     <main>
@@ -86,7 +111,56 @@ function App() {
         }}
       />
 
-      <Cv personData={personData} workData={workData} />
+      <Education
+        educationData={educationData}
+        handleChange={function (element, property) {
+          setEducationData({ ...educationData, [property]: element.value });
+        }}
+      />
+
+      <Skills
+        skillsData={skillsData}
+        handleChange={function (objectData) {
+          const {
+            elementId = null,
+            deleteSkill,
+            addNewSkill,
+            element = "",
+          } = objectData;
+          const index = elementId
+            ? skillsData.findIndex((skill) => skill.id === elementId)
+            : 0;
+          let newSkillsData = [...skillsData];
+
+          if (addNewSkill) {
+            newSkillsData.push({
+              id: crypto.randomUUID(),
+              skill: "",
+            });
+          } else if (deleteSkill) {
+            newSkillsData.splice(index, 1);
+          } else {
+            skillsData[index].skill = element.value;
+          }
+
+          setSkillsData(newSkillsData);
+        }}
+      />
+
+      <Contacts
+        contactsData={contactsData}
+        handleChange={function (element, property) {
+          setContactsData({ ...contactsData, [property]: element.value });
+        }}
+      />
+
+      <Cv
+        personData={personData}
+        workData={workData}
+        educationData={educationData}
+        skillsData={skillsData}
+        contactsData={contactsData}
+      />
     </main>
   );
 }
