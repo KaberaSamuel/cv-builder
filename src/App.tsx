@@ -18,14 +18,14 @@ function App() {
     userStatement: "",
   });
 
-  const [workData, setWorkData] = useState([
+  const [jobs, setWorkData] = useState([
     {
       position: "",
       company: "",
       startingDate: "",
       endingDate: "",
       role: "",
-      id: 0,
+      id: 1,
     },
   ]);
 
@@ -52,22 +52,20 @@ function App() {
     <main>
       <PersonalDataInput
         personData={personData}
-        functions={{
-          handleInputChange: function (e, property) {
-            setPersonData({ ...personData, [property]: e.target.value });
-          },
-
-          handleImageChange: function (e) {
-            const imageObject = e.target.files[0];
+        handleImageChange={function (e) {
+          if (e.currentTarget.files) {
+            const imageObject = e.currentTarget.files[0];
             const url = URL.createObjectURL(imageObject);
-
             setPersonData({ ...personData, imageSource: url });
-          },
+          }
+        }}
+        handleInputChange={function (e, property) {
+          setPersonData({ ...personData, [property]: e.target.value });
         }}
       />
 
       <WorkExperience
-        workData={workData}
+        jobs={jobs}
         handleChange={function (objectData) {
           const {
             element = "",
@@ -77,10 +75,10 @@ function App() {
             deleteJob = false,
           } = objectData;
 
-          let newWorkData = [...workData];
+          let newWorkData = [...jobs];
 
           if (addNewJob) {
-            let newId = workData[0].id;
+            let newId = jobs[0].id;
             newId += 1;
             const newJob = {
               position: "",
@@ -155,7 +153,7 @@ function App() {
 
       <Cv
         personData={personData}
-        workData={workData}
+        jobs={jobs}
         educationData={educationData}
         skillsData={skillsData}
         contactsData={contactsData}

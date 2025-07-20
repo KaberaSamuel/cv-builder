@@ -9,10 +9,56 @@ import {
   faUserGear,
   faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 
-function PersonalDataInput({ personData, functions }) {
+// interfaces for props types
+interface PersonDataProps {
+  firstName: string;
+  secondName: string;
+  niche: string;
+  userStatement: string;
+  imageSource: string;
+}
+
+interface PersonalDataInputProps {
+  personData: PersonDataProps;
+  handleInputChange: (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+    propertyName: string
+  ) => void;
+  handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+interface JobProps {
+  position: string;
+  company: string;
+  startingDate: string;
+  endingDate: string;
+  role: string;
+  id: number;
+}
+
+interface WorkHandlerDataProps {
+  element?: HTMLInputElement | HTMLTextAreaElement;
+  id?: number;
+  property?: string;
+  addNewJob?: boolean;
+  deleteJob?: boolean;
+}
+
+interface WorkExperienceProps {
+  jobs: JobProps[];
+  handleChange: (workHandlerData: WorkHandlerDataProps) => void;
+}
+
+function PersonalDataInput({
+  personData,
+  handleInputChange,
+  handleImageChange,
+}: PersonalDataInputProps) {
   const { firstName, secondName, niche, userStatement } = personData;
-  const { handleInputChange, handleImageChange } = functions;
 
   return (
     <div className="personal-data">
@@ -64,10 +110,10 @@ function PersonalDataInput({ personData, functions }) {
   );
 }
 
-function WorkExperience({ workData, handleChange }) {
-  const hasManyJobs = workData.length > 1;
-  const jobsOutput = workData.map((work) => {
-    const { position, company, startingDate, endingDate, role, id } = work;
+function WorkExperience({ jobs, handleChange }: WorkExperienceProps) {
+  const hasManyJobs = jobs.length > 1;
+  const jobsOutput = jobs.map((job) => {
+    const { position, company, startingDate, endingDate, role, id } = job;
 
     // returning individual work experience item
     return (
@@ -146,7 +192,6 @@ function WorkExperience({ workData, handleChange }) {
 
         <div>
           <textarea
-            type="text"
             value={role}
             placeholder="your role at this job"
             onChange={(e) => {
