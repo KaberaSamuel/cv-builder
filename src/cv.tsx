@@ -7,7 +7,7 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 
-function Cv({ personData, workData, educationData, skillsData, contactsData }) {
+function Cv({ personData, jobs, educationData, skillsData, contactsData }) {
   const { firstName, secondName, niche, userStatement, imageSource } =
     personData;
   const { school, degree } = educationData;
@@ -33,7 +33,7 @@ function Cv({ personData, workData, educationData, skillsData, contactsData }) {
       <section className="work-experience">
         <h2 className="header">Experience</h2>
         <div className="jobs">
-          {workData.map((job) => {
+          {jobs.map((job) => {
             const { position, company, startingDate, endingDate, role, id } =
               job;
             return (

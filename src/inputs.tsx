@@ -1,5 +1,7 @@
-/* eslint react/prop-types: 0 */
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { PersonalDataInputProps, WorkExperienceProps } from "./App.type";
+
 import {
   faUser,
   faScrewdriverWrench,
@@ -9,49 +11,6 @@ import {
   faUserGear,
   faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
-
-// interfaces for props types
-interface PersonDataProps {
-  firstName: string;
-  secondName: string;
-  niche: string;
-  userStatement: string;
-  imageSource: string;
-}
-
-interface PersonalDataInputProps {
-  personData: PersonDataProps;
-  handleInputChange: (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
-    propertyName: string
-  ) => void;
-  handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-interface JobProps {
-  position: string;
-  company: string;
-  startingDate: string;
-  endingDate: string;
-  role: string;
-  id: number;
-}
-
-interface WorkHandlerDataProps {
-  element?: HTMLInputElement | HTMLTextAreaElement;
-  id?: number;
-  property?: string;
-  addNewJob?: boolean;
-  deleteJob?: boolean;
-}
-
-interface WorkExperienceProps {
-  jobs: JobProps[];
-  handleChange: (workHandlerData: WorkHandlerDataProps) => void;
-}
 
 function PersonalDataInput({
   personData,
@@ -110,7 +69,7 @@ function PersonalDataInput({
   );
 }
 
-function WorkExperience({ jobs, handleChange }: WorkExperienceProps) {
+function WorkExperience({ jobs, handleChange }) {
   const hasManyJobs = jobs.length > 1;
   const jobsOutput = jobs.map((job) => {
     const { position, company, startingDate, endingDate, role, id } = job;

@@ -1,6 +1,7 @@
 /* eslint react/prop-types: 0 */
 import { useState } from "react";
 import Cv from "./cv";
+import { PersonalDataInputProps, WorkExperienceProps } from "./App.type";
 import {
   PersonalDataInput,
   WorkExperience,
@@ -48,20 +49,24 @@ function App() {
     portifolioLink: "",
   });
 
+  function handleImageChange(e) {
+    if (e.currentTarget.files) {
+      const imageObject = e.currentTarget.files[0];
+      const url = URL.createObjectURL(imageObject);
+      setPersonData({ ...personData, imageSource: url });
+    }
+  }
+
+  function handleInputChange(e, property) {
+    setPersonData({ ...personData, [property]: e.target.value });
+  }
+
   return (
     <main>
       <PersonalDataInput
         personData={personData}
-        handleImageChange={function (e) {
-          if (e.currentTarget.files) {
-            const imageObject = e.currentTarget.files[0];
-            const url = URL.createObjectURL(imageObject);
-            setPersonData({ ...personData, imageSource: url });
-          }
-        }}
-        handleInputChange={function (e, property) {
-          setPersonData({ ...personData, [property]: e.target.value });
-        }}
+        handleImageChange={handleImageChange}
+        handleInputChange={handleInputChange}
       />
 
       <WorkExperience
