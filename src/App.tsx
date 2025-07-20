@@ -49,7 +49,7 @@ function App() {
     portifolioLink: "",
   });
 
-  function handleImageChange(e) {
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.currentTarget.files) {
       const imageObject = e.currentTarget.files[0];
       const url = URL.createObjectURL(imageObject);
@@ -57,7 +57,12 @@ function App() {
     }
   }
 
-  function handleInputChange(e, property) {
+  function handleInputChange(
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+    property: string
+  ) {
     setPersonData({ ...personData, [property]: e.target.value });
   }
 

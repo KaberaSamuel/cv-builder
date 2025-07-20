@@ -327,5 +327,4 @@ function Contacts({ contactsData, handleChange }) {
   );
 }
 
-// function Skills()
 export { PersonalDataInput, WorkExperience, Education, Skills, Contacts };
